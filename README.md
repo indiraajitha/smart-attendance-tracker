@@ -1,4 +1,5 @@
 Project Title : Smart Attendance Tracker using Face Recognition
+
 Technologies:
 Python
 Flask
