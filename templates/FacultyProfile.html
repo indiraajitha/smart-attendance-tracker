@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Faculty Profile | Face Attendance</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS files -->
+    <link href="static/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f3f6f9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header_agileits {
+            background: linear-gradient(90deg, #0052D4, #4364F7, #6FB1FC);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .nav {
+            margin-top: 15px;
+        }
+
+        .nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #ffe066;
+        }
+
+        /* Content Section */
+        .profile-container {
+            padding: 40px;
+            max-width: 1000px;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        h3.section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 28px;
+        }
+
+        .profile-info {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .profile-info label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .profile-info p {
+            color: #555;
+            margin: 0;
+        }
+
+        .footer {
+            background-color: #2c3e50;
+            color: #eee;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .header_agileits {
+                padding: 15px 0;
+            }
+
+            h3.section-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header_agileits">
+    <div class="logo">
+        <h1>Faculty Profile</h1>
+    </div>
+
+    <div class="nav">
+        <a href="/FacultyHome">Home</a>
+        <a href="/FacultyProfile">Profile</a>
+        <a href="/FStudentInfo">Student Info</a>
+        <a href="/FAttendanceInfo">Attendance Info</a>
+        <a href="/NewStudent">New Student</a>
+        <a href="/">Logout</a>
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="profile-container">
+    <h3 class="section-title">Welcome, {{ data[0][1] }}!</h3> <!-- Assuming name is at index 1 -->
+
+    <div class="profile-info">
+        <label for="name">Name:</label>
+        <p>{{ data[0][1] }}</p> <!-- Assuming name is at index 1 -->
+    </div>
+
+    <div class="profile-info">
+        <label for="email">Email:</label>
+        <p>{{ data[0][3] }}</p> <!-- Assuming email is at index 3 -->
+    </div>
+
+    <div class="profile-info">
+        <label for="mobile">Mobile:</label>
+        <p>{{ data[0][2] }}</p> <!-- Assuming mobile is at index 2 -->
+    </div>
+
+    <div class="profile-info">
+        <label for="username">Username:</label>
+        <p>{{ data[0][4] }}</p> <!-- Assuming username is at index 4 -->
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>© 2024 Dept. of Computer Science | Face Attendance Portal | Designed by Students</p>
+</div>
+
+<!-- Flash Notification -->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <script>
+        var messages = {{ messages | safe }};
+        for (var i = 0; i < messages.length; i++) {
+            alert(messages[i]);
+        }
+    </script>
+    {% endif %}
+{% endwith %}
+
+</body>
+</html>

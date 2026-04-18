@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Submit Leave Request | Smart Attendance Tracker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+
+    <style>
+        /* Global CSS Variables - Consistent across all your templates */
+        :root {
+            --primary-color: #00796B; /* Teal */
+            --secondary-color: #004D40; /* Darker Teal */
+            --accent-color: #ffc107; /* Amber/Yellow for highlights */
+            --text-dark: #2c3e50; /* Dark Slate Gray */
+            --text-medium: #555; /* Medium Gray */
+            --text-light: #cfd8dc; /* Light Grayish Blue */
+            --background-light: #f0f2f5; /* Light Gray Background */
+            --background-white: #ffffff;
+            --border-light: #e0e0e0; /* Slightly lighter border */
+            --danger-color: #e74c3c; /* Red for logout/delete */
+            --success-color: #28a745; /* Green for actions */
+            --info-color: #17a2b8; /* Blue for info */
+            --warning-color: #ffc107; /* Yellow for warnings */
+
+            --font-poppins: 'Poppins', sans-serif;
+
+            --spacing-xxs: 4px;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 20px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-xxl: 96px;
+
+            --border-radius-sm: 5px;
+            --border-radius-md: 10px;
+        }
+
+        body {
+            font-family: var(--font-poppins);
+            background-color: var(--background-light);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* --- Main Content Area --- */
+        .main-content-area {
+            flex-grow: 1;
+            padding: var(--spacing-lg) var(--spacing-md);
+            max-width: 800px; /* Adjust max-width for form page */
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Dashboard Cards - Reused for form */
+        .dashboard-card {
+            background-color: var(--background-white);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        h3.section-title {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: var(--spacing-xs);
+            font-size: 1.6em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        h3.section-title i {
+            margin-right: var(--spacing-xs);
+            color: var(--accent-color);
+        }
+
+        /* Flash Messages (Copied for consistency) */
+        .flash-messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .flash-messages li {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+        .flash-messages .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .flash-messages .danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .flash-messages .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+        .flash-messages .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+
+        /* Leave Request Form Specific Styles */
+        .leave-form-container {
+            background-color: var(--background-white);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .leave-form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .leave-form-container label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-xxs);
+            display: block; /* Ensures label takes full width */
+        }
+
+        .leave-form-container input[type="date"],
+        .leave-form-container textarea,
+        .leave-form-container select { /* Added style for select element */
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-sm);
+            font-family: var(--font-poppins);
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding in width */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .leave-form-container input[type="date"]:focus,
+        .leave-form-container textarea:focus,
+        .leave-form-container select:focus { /* Added style for select element */
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); /* Light teal glow */
+        }
+
+        .leave-form-container textarea {
+            min-height: 120px; /* Slightly taller textarea */
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        .leave-form-container button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            align-self: flex-start; /* Align button to the start */
+        }
+
+        .leave-form-container button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Student Info Display */
+        .student-info-display {
+            background-color: #e8f5e9; /* Light green background */
+            border: 1px solid #c8e6c9; /* Green border */
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.05em;
+            color: var(--text-dark);
+        }
+
+        .student-info-display p {
+            margin: var(--spacing-xxs) 0;
+        }
+
+        .student-info-display strong {
+            color: var(--primary-color);
+        }
+
+        /* Back Button Specific Styles */
+        .back-button-container {
+            text-align: left;
+            margin-bottom: var(--spacing-lg); /* Space below the button */
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--info-color); /* A nice blue for back */
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: #117a8b; /* Darker blue */
+            transform: translateY(-2px);
+        }
+
+        /* Footer - Consistent across all your generated templates */
+        .site-footer {
+            background-color: #f1f1f1;
+            color: var(--text-dark);
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--border-light);
+            text-align: center;
+            font-size: 14px;
+            user-select: none;
+            margin-top: auto;
+        }
+        .site-footer .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-content-area {
+                padding: var(--spacing-md);
+            }
+            .leave-form-container {
+                padding: var(--spacing-md);
+            }
+            .leave-form-container button {
+                align-self: stretch; /* Make button full width on small screens */
+            }
+        }
+        @media (max-width: 480px) {
+            .main-content-area {
+                padding: var(--spacing-md) var(--spacing-xs);
+            }
+            .leave-form-container {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content-area">
+
+        {# Back Button Added #}
+        <div class="back-button-container">
+            <a href="{{ url_for('StudentHome') }}" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+
+        {# Flash Messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {# Student Information Display #}
+        {% if student_info %}
+            <div class="student-info-display">
+                <p><strong>Register No:</strong> {{ student_info[0] }}</p>
+                <p><strong>Name:</strong> {{ student_info[1] }}</p>
+                <p><strong>Department:</strong> {{ student_info[2] }}</p>
+                <p><strong>Batch:</strong> {{ student_info[3] }}</p>
+                <p><strong>Year:</strong> {{ student_info[4] }}</p>
+            </div>
+        {% endif %}
+
+        <div class="leave-form-container">
+            <h3 class="section-title"><i class="fas fa-paper-plane"></i> Submit Your Leave Request</h3>
+            <form action="{{ url_for('request_leave') }}" method="POST"> {# CORRECTED: Form submits to 'request_leave' #}
+
+                <div class="form-group">
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_date">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="reason">Reason for Leave:</label>
+                    <textarea id="reason" name="reason" rows="5" required placeholder="Briefly describe your reason for leave..."></textarea>
+                </div>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Submit Request</button>
+            </form>
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            &copy; 2025 Hindusthan College Of Engineering And Technology. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0b0a14b3-473d-4846-a35d-5da929999cdd" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="2nb2VMsTN5Etrx88PtN0zni7iw9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\FaceAttendance(INandOut)Py" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.App">
+    <configuration name="App" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="FaceAttendance(INandOut)Py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Project\FaceAttendance(INandOut)Py\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/App.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="LiveRecognition" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="FaceAttendance(INandOut)Py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LiveRecognition.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="LiveRecognition1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="FaceAttendance(INandOut)Py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LiveRecognition1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="LiveRecognition2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="FaceAttendance(INandOut)Py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/LiveRecognition2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_fsdk" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="FaceAttendance(INandOut)Py" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_fsdk.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.App" />
+        <item itemvalue="Python.test_fsdk" />
+        <item itemvalue="Python.LiveRecognition1" />
+        <item itemvalue="Python.LiveRecognition2" />
+        <item itemvalue="Python.LiveRecognition" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0b0a14b3-473d-4846-a35d-5da929999cdd" name="Default Changelist" comment="" />
+      <created>1729227477806</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1729227477806</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="47" y="0" key="#App" timestamp="1748766195796">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="47" y="0" key="#App/0.0.1280.672@0.0.1280.672" timestamp="1748766195796" />
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1748773735972">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="0" y="0" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.672@0.0.1280.672" timestamp="1748773735972" />
+    <state x="458" y="141" key="FileChooserDialogImpl" timestamp="1746169563677">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="458" y="141" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1746169563677" />
+    <state width="616" height="153" key="GridCell.Tab.0.bottom" timestamp="1748949970713">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="616" height="153" key="GridCell.Tab.0.bottom/0.0.1280.672@0.0.1280.672" timestamp="1748949970713" />
+    <state width="1579" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1746188250465" />
+    <state width="616" height="153" key="GridCell.Tab.0.center" timestamp="1748949970713">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="616" height="153" key="GridCell.Tab.0.center/0.0.1280.672@0.0.1280.672" timestamp="1748949970713" />
+    <state width="1579" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1746188250465" />
+    <state width="616" height="153" key="GridCell.Tab.0.left" timestamp="1748949970713">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="616" height="153" key="GridCell.Tab.0.left/0.0.1280.672@0.0.1280.672" timestamp="1748949970713" />
+    <state width="1579" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1746188250465" />
+    <state width="616" height="153" key="GridCell.Tab.0.right" timestamp="1748949970713">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="616" height="153" key="GridCell.Tab.0.right/0.0.1280.672@0.0.1280.672" timestamp="1748949970713" />
+    <state width="1579" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1746188250465" />
+    <state width="1259" height="201" key="GridCell.Tab.1.bottom" timestamp="1748343960203">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1259" height="201" key="GridCell.Tab.1.bottom/0.0.1280.672@0.0.1280.672" timestamp="1748343960203" />
+    <state width="1259" height="201" key="GridCell.Tab.1.center" timestamp="1748343960203">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1259" height="201" key="GridCell.Tab.1.center/0.0.1280.672@0.0.1280.672" timestamp="1748343960203" />
+    <state width="1259" height="201" key="GridCell.Tab.1.left" timestamp="1748343960203">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1259" height="201" key="GridCell.Tab.1.left/0.0.1280.672@0.0.1280.672" timestamp="1748343960203" />
+    <state width="1259" height="201" key="GridCell.Tab.1.right" timestamp="1748343960203">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state width="1259" height="201" key="GridCell.Tab.1.right/0.0.1280.672@0.0.1280.672" timestamp="1748343960203" />
+    <state x="232" y="0" key="SettingsEditor" timestamp="1748773166374">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="232" y="0" key="SettingsEditor/0.0.1280.672@0.0.1280.672" timestamp="1748773166374" />
+    <state x="290" y="28" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1745989966676" />
+    <state x="341" y="160" key="com.intellij.ide.util.TipDialog" timestamp="1748945792789">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="341" y="160" key="com.intellij.ide.util.TipDialog/0.0.1280.672@0.0.1280.672" timestamp="1748945792789" />
+    <state x="370" y="141" width="672" height="530" key="search.everywhere.popup" timestamp="1748547112124">
+      <screen x="0" y="0" width="1280" height="672" />
+    </state>
+    <state x="370" y="141" width="672" height="530" key="search.everywhere.popup/0.0.1280.672@0.0.1280.672" timestamp="1748547112124" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1740809374836" />
+  </component>
+</project>

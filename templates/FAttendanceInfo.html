@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Faculty | Attendance Records - Smart Attendance Tracker</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+
+    <style>
+        /* Your existing CSS variables and base styles */
+        :root {
+            --primary-color: #00796B; /* Teal */
+            --secondary-color: #004D40; /* Darker Teal */
+            --accent-color: #ffc107; /* Amber/Yellow for highlights */
+            --text-dark: #2c3e50; /* Dark Slate Gray */
+            --text-medium: #555; /* Medium Gray */
+            --text-light: #cfd8dc; /* Light Grayish Blue */
+            --background-light: #f0f2f5; /* Light Gray Background */
+            --background-white: #ffffff;
+            --border-light: #e0e0e0; /* Slightly lighter border */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header .logo {
+            font-weight: 700;
+        }
+
+        /* --- NEW STYLES FOR BUTTONS IN HEADER --- */
+        .header .header-actions {
+            display: flex;
+            gap: 15px; /* Space between buttons */
+        }
+
+        .header .header-btn {
+            background-color: var(--accent-color);
+            color: var(--secondary-color); /* Darker text for contrast */
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none; /* For anchor tags */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: flex; /* To align icon and text */
+            align-items: center;
+            gap: 8px; /* Space between icon and text */
+        }
+
+        .header .header-btn:hover {
+            background-color: #ffda67; /* Lighter amber on hover */
+            transform: translateY(-2px);
+        }
+
+        /* --- END NEW STYLES --- */
+
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--background-white);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            flex-grow: 1;
+        }
+
+        h1, h2 {
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .filter-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: inset 0 1px 5px rgba(0,0,0,0.05);
+        }
+
+        .filter-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text-medium);
+        }
+
+        .form-group select,
+        .form-group input[type="date"] {
+            padding: 10px 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 5px;
+            font-size: 16px;
+            color: var(--text-dark);
+            background-color: #fefefe;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .filter-btn {
+            grid-column: span var(--filter-cols, 1);
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .filter-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .attendance-table-container {
+            overflow-x: auto;
+            margin-top: 25px;
+        }
+
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            min-width: 800px;
+        }
+
+        .attendance-table th,
+        .attendance-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .attendance-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .attendance-table tbody tr:nth-child(even) {
+            background-color: #f6f6f6;
+        }
+
+        .attendance-table tbody tr:hover {
+            background-color: #eaf7f5;
+        }
+
+        .no-records-found {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-medium);
+            font-style: italic;
+        }
+
+        .download-btn-container {
+            text-align: center;
+            margin-top: 30px;
+            display: flex; /* For horizontal alignment */
+            justify-content: center;
+            gap: 15px; /* Space between buttons */
+        }
+
+        .download-btn-container button {
+            padding: 12px 25px;
+            background-color: #28a745; /* Green for download */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .download-btn-container button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .site-footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
+
+        .site-footer .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+
+            .header .header-actions {
+                margin-top: 10px;
+                flex-direction: column; /* Stack buttons vertically on small screens */
+                gap: 10px;
+            }
+
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .filter-form {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-btn {
+                grid-column: auto;
+            }
+
+            .attendance-table th,
+            .attendance-table td {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+
+            .download-btn-container {
+                flex-direction: column; /* Stack download buttons vertically */
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1>Hindusthan College of Engineering and Technology</h1>
+            <p>Department of Computer Application</p>
+        </div>
+        <div class="header-actions">
+            <a href="{{ url_for('FacultyHome') }}" class="header-btn">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="{{ url_for('Fattendance') }}" class="header-btn">
+                <i class="fas fa-edit"></i> Mark Attendance (Manual)
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>View Attendance Records</h2>
+
+        <div class="filter-section">
+            <h3>Filter Attendance</h3>
+            <form class="filter-form" action="{{ url_for('FAttendanceInfo') }}" method="POST">
+                <div class="form-group">
+                    <label for="depart">Department:</label>
+                    <select id="depart" name="depart" required>
+                        <option value="">Select Department</option>
+                        {# Set MCA as default, and ensure other departments are removed if they are not needed #}
+                        <option value="MCA" {% if request_form.depart == 'MCA' or not request_form.depart %}selected{% endif %}>MCA</option>
+                        {# Remove other department options if not needed for MCA-specific view #}
+                        {# <option value="CSE" {% if request_form.depart == 'CSE' %}selected{% endif %}>CSE</option> #}
+                        {# ... other departments if applicable ... #}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="batch">Batch:</label>
+                    <select id="batch" name="Batch" required>
+                        <option value="">Select Batch</option>
+                        {# Updated batch options #}
+                        <option value="2023-2025" {% if request_form.Batch == '2023-2025' %}selected{% endif %}>2023-2025</option>
+                        <option value="2024-2026" {% if request_form.Batch == '2024-2026' %}selected{% endif %}>2024-2026</option>
+                        <option value="2025-2027" {% if request_form.Batch == '2025-2027' %}selected{% endif %}>2025-2027</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <select id="year" name="year" required>
+                        <option value="">Select Year</option>
+                        {# Updated year options #}
+                        <option value="I Year" {% if request_form.year == 'I Year' %}selected{% endif %}>I Year</option>
+                        <option value="II Year" {% if request_form.year == 'II Year' %}selected{% endif %}>II Year</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required value="{{ request_form.date if request_form.date else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="shift">Shift:</label>
+                    <select id="shift" name="shift" required>
+                        <option value="">Select Shift</option>
+                        <option value="FN" {% if request_form.shift == 'FN' %}selected{% endif %}>Forenoon (FN)</option>
+                        <option value="AN" {% if request_form.shift == 'AN' %}selected{% endif %}>Afternoon (AN)</option>
+                    </select>
+                </div>
+                {# Add a submit button for the filter form #}
+                <button type="submit" class="filter-btn">Search Records</button>
+            </form>
+        </div>
+
+        <div class="attendance-table-container">
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Register No</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Batch</th>
+                        <th>Year</th>
+                        <th>Date & Time</th>
+                        <th>Attendance Status</th>
+                        <th>Shift</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data %}
+                        {% for item in data %}
+                            <tr>
+                                {# CHANGED: Accessing by dictionary keys (column names) instead of numerical indices #}
+                                <td>{{ item.Regno }}</td>
+                                <td>{{ item.Name }}</td>
+                                <td>{{ item.Department }}</td>
+                                <td>{{ item.Batch }}</td>
+                                <td>{{ item.Year }}</td>
+                                <td>{{ item.Datetime.strftime('%Y-%m-%d %H:%M:%S') if item.Datetime else '' }}</td>
+                                <td>{{ item.Attendance }}</td>
+                                <td>{{ item.Shift if item.Shift is not none else 'N/A' }}</td>
+                                <td>
+                                    <form action="{{ url_for('Fdelete_attendance') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this attendance record for {{ item.Regno }} on {{ item.Datetime.strftime('%Y-%m-%d %H:%M:%S') if item.Datetime else '' }} (Shift: {{ item.Shift if item.Shift is not none else 'N/A' }})?');">
+                                        {# Pass correct keys for hidden inputs #}
+                                        <input type="hidden" name="regno" value="{{ item.Regno }}">
+                                        <input type="hidden" name="datetime" value="{{ item.Datetime.strftime('%Y-%m-%d %H:%M:%S') if item.Datetime else '' }}">
+                                        {# Pass Shift for unique record identification for deletion #}
+                                        <input type="hidden" name="shift" value="{{ item.Shift if item.Shift is not none else '' }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        {# The colspan 9 is correct for 8 data columns + 1 Actions column #}
+                        <tr><td colspan="9" class="no-records-found">No attendance records found for the selected criteria. Use the filter above to search for records.</td></tr>
+                    {% endif %}
+                </tbody>
+
+            </table>
+
+            <div class="download-btn-container">
+                <form action="{{ url_for('Fdownload_attendance') }}" method="post">
+                    {# Hidden inputs to pass current filter criteria for download #}
+                    <input type="hidden" name="depart" value="{{ request_form['depart'] if request_form['depart'] }}">
+                    <input type="hidden" name="Batch" value="{{ request_form['Batch'] if request_form['Batch'] }}">
+                    <input type="hidden" name="year" value="{{ request_form['year'] if request_form['year'] }}">
+                    <input type="hidden" name="date" value="{{ request_form['date'] if request_form['date'] }}">
+                    <input type="hidden" name="shift" value="{{ request_form['shift'] if request_form['shift'] }}"> {# Pass shift for download #}
+                   <button type="submit">Download CSV</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            &copy; 2025 Hindusthan College Of Engineering And Technology. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

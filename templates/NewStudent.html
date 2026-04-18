@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register New Student - Smart Attendance Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico"> {# Assuming you have a favicon #}
+
+    <style>
+        /* Global CSS Variables - Consistent across all your templates */
+        :root {
+            --primary-color: #00796B; /* Teal */
+            --secondary-color: #004D40; /* Darker Teal */
+            --accent-color: #ffc107; /* Amber/Yellow for highlights */
+            --text-dark: #2c3e50; /* Dark Slate Gray */
+            --text-medium: #555; /* Medium Gray */
+            --text-light: #cfd8dc; /* Light Grayish Blue */
+            --background-light: #f0f2f5; /* Light Gray Background */
+            --background-white: #ffffff;
+            --border-light: #e0e0e0; /* Slightly lighter border */
+            --danger-color: #e74c3c; /* Red for logout/delete */
+            --success-color: #28a745; /* Green for actions */
+            --info-color: #17a2b8; /* Blue for info */
+            --warning-color: #ffc107; /* Yellow for warnings */
+
+
+            --font-poppins: 'Poppins', sans-serif;
+
+            --spacing-xxs: 4px;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 20px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-xxl: 96px;
+        }
+
+        body {
+            font-family: var(--font-poppins);
+            background-color: var(--background-light);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Site Header Styles --- */
+        .site-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-md) 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .site-header-content {
+            display: flex;
+            justify-content: center; /* Center the logo */
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .site-header .logo h1 {
+            margin: 0;
+            font-size: 1.8em;
+            line-height: 1.2;
+        }
+
+        .site-header .logo h1 a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .site-header .logo p {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+            color: white;
+        }
+
+        /* --- Main Content Container Styles --- */
+        .main-content-container {
+            width: 90%;
+            max-width: 600px; /* Adjusted for forms */
+            margin: 30px auto;
+            background-color: var(--background-white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex-grow: 1;
+        }
+
+        /* Flash Messages (Matching FAttendanceInfo.html) */
+        .flash-messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .flash-messages li {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+        .flash-messages .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .flash-messages .danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .flash-messages .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+        .flash-messages .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+
+        h2.section-title {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 10px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        /* Back Link Style (consistent with FAttendanceInfo.html) */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: var(--secondary-color);
+        }
+
+
+        /* Form Styling (adapted from your original Bootstrap, but with global vars) */
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+            color: var(--text-medium);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 1em;
+            color: var(--text-dark);
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); /* Teal shadow */
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-medium);
+            opacity: 0.7;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: block; /* Ensure it takes full width */
+            margin-top: var(--spacing-lg); /* Space above button */
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: var(--spacing-md) 0;
+            text-align: center;
+            margin-top: auto; /* Pushes footer to the bottom */
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header-content">
+            <div class="logo">
+                <h1><a href="{{ url_for('FacultyHome') }}">Smart Attendance Tracker</a></h1>
+                <p>Register New Student</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content-container">
+        <a href="{{ url_for('FacultyHome') }}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <h2 class="section-title">Register New Student</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('newstudent') }}" method="post">
+            <div class="form-group">
+                <label for="Registerno">Registration Number</label>
+                <input type="text" class="form-control" id="Registerno" name="regno" placeholder="Enter Registration Number" value="{{ request_form.regno if request_form else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Name">Student Name</label>
+                <input type="text" class="form-control" id="Name" name="uname" placeholder="Enter Student Name" value="{{ request_form.uname if request_form else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="">-- Select --</option>
+                    <option value="Male" {% if request_form and request_form.gender == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if request_form and request_form.gender == 'Female' %}selected{% endif %}>Female</option>
+                    <option value="Other" {% if request_form and request_form.gender == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile Number" value="{{ request_form.mobile if request_form else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="{{ request_form.email if request_form else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <textarea class="form-control" id="Address" name="Address" placeholder="Enter Address" required>{{ request_form.Address if request_form else '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="Department">Department</label>
+                <input type="text" class="form-control" id="Department" name="depart" placeholder="Enter Department" value="{{ request_form.depart if request_form else '' }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="Batch">Batch</label>
+                <select class="form-control" id="Batch" name="Batch" required>
+                    <option value="">-- Select --</option>
+                    <option value="2023-2025" {% if request_form and request_form.Batch == '2023-2025' %}selected{% endif %}>2023-2025</option>
+                    <option value="2024-2026" {% if request_form and request_form.Batch == '2024-2026' %}selected{% endif %}>2024-2026</option>
+                    <option value="2025-2027" {% if request_form and request_form.Batch == '2025-2027' %}selected{% endif %}>2025-2027</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="year">Year</label>
+                <select class="form-control" id="year" name="year" required>
+                    <option value="">-- Select --</option>
+                    <option value="I Year" {% if request_form and request_form.year == 'I Year' %}selected{% endif %}>I Year</option>
+                    <option value="II Year" {% if request_form and request_form.year == 'II Year' %}selected{% endif %}>II Year</option>
+                </select>
+            </div>
+
+            {# NEW: Password Field for Student Registration #}
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register Student</button>
+        </form>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            &copy; 2025 Hindusthan College Of Engineering And Technology. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

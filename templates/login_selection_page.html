@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Select Login Role - Smart Attendance Tracker</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* General styling for a clean, centered login page */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            color: #2c3e50;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            margin: 20px;
+        }
+        .login-container h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #00796B;
+        }
+        .login-container p {
+            margin-bottom: 30px;
+            color: #555;
+        }
+        .login-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between buttons */
+        }
+        .login-options a {
+            display: flex; /* Use flexbox for icon and text alignment */
+            align-items: center;
+            justify-content: center;
+            background-color: #00796B;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-decoration: none; /* Ensure links don't have underlines */
+        }
+        .login-options a i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        .login-options a:hover {
+            background-color: #004D40;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .back-to-home {
+            margin-top: 30px;
+            font-size: 16px;
+        }
+        .back-to-home a {
+            color: #00796B;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-to-home a:hover {
+            color: #004D40;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Choose Your Role to Login</h2>
+        <p>Please select your appropriate role to proceed to the login form.</p>
+        <div class="login-options">
+            <a href="{{ url_for('AdminLogin') }}"><i class="fas fa-user-shield"></i> Admin Login</a>
+            <a href="{{ url_for('facultylogin') }}"><i class="fas fa-chalkboard-teacher"></i> Faculty Login</a>
+            <a href="{{ url_for('studentlogin') }}"><i class="fas fa-user-graduate"></i> Student Login</a>
+        </div>
+        <p class="back-to-home"><a href="/">Back to Home</a></p>
+    </div>
+</body>
+</html>

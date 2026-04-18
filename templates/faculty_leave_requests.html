@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Faculty - Leave Requests</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles for the page */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+        }
+        .header_agileits {
+            background: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .header_agileits h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: 500;
+        }
+        .nav {
+            margin-top: 10px;
+        }
+        .nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .nav a:hover {
+            color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        h3.heading {
+            font-size: 22px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        table th, table td {
+            padding: 12px 15px;
+            text-align: center;
+            font-size: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table td {
+            color: #333;
+        }
+        .badge {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+        }
+        .green { background-color: #28a745; }
+        .yellow { background-color: #ffc107; color: #000; }
+        .red { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header_agileits">
+    <h1>Faculty Dashboard</h1>
+    <div class="nav">
+        <a href="/faculty_home">Home</a>
+        <a href="/faculty_leave_requests">Leave Requests</a>
+        <a href="/">Logout</a>
+    </div>
+</div>
+
+<!-- Content Area -->
+<div class="container">
+    <h3 class="heading">Leave Requests Submitted by Students</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Requested On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leave_requests %}
+            <tr>
+                <td>{{ leave[5] }}</td>
+                <td>{{ leave[0] }}</td>
+                <td>{{ leave[1] }}</td>
+                <td>{{ leave[2] }}</td>
+                <td>
+                    <span class="badge
+                        {% if leave[3] == 'Approved' %}
+                            green
+                        {% elif leave[3] == 'Pending' %}
+                            yellow
+                        {% else %}
+                            red
+                        {% endif %}
+                    ">
+                        {{ leave[3] }}
+                    </span>
+                </td>
+                <td>{{ leave[4] }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No leave requests found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>© 2024 Face Attendance In and Out. All rights reserved | Designed by <a href="#">Student</a></p>
+</div>
+
+<!-- JS Scripts -->
+<script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+
+</body>
+</html>

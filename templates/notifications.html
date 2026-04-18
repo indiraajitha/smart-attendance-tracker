@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Notifications</title>
+    </head>
+<body>
+    <h1>Your Notifications</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h2>Unread Notifications</h2>
+    {% if unread_notifications %}
+        <ul>
+            {% for notification in unread_notifications %}
+                <li>
+                    <strong>{{ notification.notification_type | default('General') }}:</strong>
+                    {{ notification.message }}
+                    <small>({{ notification.created_at.strftime('%Y-%m-%d %H:%M') }})</small>
+                    <form action="{{ url_for('mark_notification_as_read', notification_id=notification.id) }}" method="post" style="display:inline;">
+                        <button type="submit">Mark as Read</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No unread notifications.</p>
+    {% endif %}
+
+    <h2>Read Notifications</h2>
+    {% if read_notifications %}
+        <ul>
+            {% for notification in read_notifications %}
+                <li>
+                    <strong>{{ notification.notification_type | default('General') }}:</strong>
+                    {{ notification.message }}
+                    <small>({{ notification.created_at.strftime('%Y-%m-%d %H:%M') }})</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No read notifications.</p>
+    {% endif %}
+
+    <a href="{{ url_for('FacultyHome') }}">Go to Home</a> </body>
+</html>

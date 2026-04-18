@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Login - Smart Attendance Tracker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+
+  <style>
+    /* Global CSS Variables (Custom Properties) - Consistent with index.html */
+    :root {
+      --primary-color: #00796B; /* Teal */
+      --secondary-color: #004D40; /* Darker Teal */
+      --accent-color: #ffc107; /* Amber/Yellow for highlights */
+      --text-dark: #2c3e50; /* Dark Slate Gray */
+      --text-medium: #555; /* Medium Gray */
+      --text-light: #cfd8dc; /* Light Grayish Blue */
+      --background-light: #f8f9fa; /* Light Gray Background */
+      --background-white: #ffffff;
+      --border-light: #e0e0e0; /* Slightly lighter border */
+
+      --font-poppins: 'Poppins', sans-serif;
+
+      --spacing-xxs: 4px;
+      --spacing-xs: 8px;
+      --spacing-sm: 12px;
+      --spacing-md: 20px;
+      --spacing-lg: 32px;
+      --spacing-xl: 48px;
+      --spacing-xxl: 96px;
+    }
+
+    body {
+      font-family: var(--font-poppins);
+      background-color: var(--background-light);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures footer sticks to bottom */
+      color: var(--text-dark);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Re-using .login-header for consistency */
+    .login-header {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: var(--spacing-md) 0; /* Adjusted padding */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* More pronounced shadow */
+      text-align: center;
+    }
+
+    .login-header .container { /* Added container for consistent width */
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+
+    .login-header h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 28px; /* Consistent font size */
+      letter-spacing: -0.5px;
+    }
+    .login-header p {
+      margin: var(--spacing-xxs) 0 0; /* Adjusted margin */
+      font-weight: 400;
+      font-size: 14px; /* Consistent font size */
+      color: var(--text-light);
+    }
+
+    /* Login Container */
+    .login-container-wrapper { /* Wrapper to center and flex content */
+        flex-grow: 1; /* Allows container to take available space */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: var(--spacing-lg) var(--spacing-md); /* Added horizontal padding */
+        background-color: var(--background-light);
+    }
+
+    .login-box {
+      background: var(--background-white);
+      padding: var(--spacing-xl); /* Increased padding for more spacious feel */
+      border-radius: 12px; /* More rounded corners */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Stronger, softer shadow */
+      width: 100%;
+      max-width: 420px; /* Slightly wider login box */
+      text-align: center;
+    }
+
+    .login-box h2 {
+      text-align: center;
+      color: var(--primary-color); /* Consistent primary color */
+      margin-bottom: var(--spacing-lg);
+      font-weight: 700; /* Bolder */
+      font-size: 32px; /* Larger heading */
+    }
+
+    .form-group { /* Group label and input */
+        margin-bottom: var(--spacing-md);
+        text-align: left; /* Align labels/inputs */
+    }
+
+    label {
+      display: block;
+      margin-bottom: var(--spacing-xs); /* Smaller margin for label */
+      font-weight: 600;
+      color: var(--text-dark); /* Darker label text for better contrast */
+      font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: calc(100% - 24px); /* Account for padding */
+      padding: 12px;
+      border: 1px solid var(--border-light); /* Consistent border color */
+      border-radius: 6px; /* Consistent border radius */
+      font-size: 16px;
+      font-family: var(--font-poppins); /* Consistent font */
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--primary-color); /* Primary color on focus */
+      box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2); /* Soft shadow on focus */
+      outline: none;
+    }
+
+    .btn-submit { /* Renamed to avoid conflicts and be more descriptive */
+      width: 100%;
+      background-color: var(--primary-color); /* Consistent primary color */
+      color: white;
+      padding: 15px; /* Slightly more padding */
+      font-size: 18px;
+      font-weight: 700; /* Bolder */
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      margin-top: var(--spacing-sm); /* Added margin-top */
+    }
+    .btn-submit:hover {
+      background-color: var(--secondary-color); /* Darker teal on hover */
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .btn-submit:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .btn-submit i { /* Icon styling */
+        margin-right: var(--spacing-xs);
+        font-size: 20px;
+    }
+
+    .back-to-selection {
+        margin-top: var(--spacing-lg);
+        font-size: 15px;
+        color: var(--text-medium);
+    }
+
+    .back-to-selection a {
+        color: var(--primary-color);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .back-to-selection a:hover {
+        color: var(--secondary-color);
+        text-decoration: underline;
+    }
+
+
+    /* Footer - Consistent with index.html */
+    .site-footer {
+      background-color: #f1f1f1;
+      color: var(--text-dark);
+      padding: var(--spacing-md); /* Reduced padding for minimal footer */
+      border-top: 1px solid var(--border-light);
+      text-align: center;
+      font-size: 14px;
+      user-select: none;
+    }
+    .site-footer .container { /* Added container for consistent width */
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .login-box {
+        margin: var(--spacing-md); /* Add margin on smaller screens */
+        padding: var(--spacing-lg) var(--spacing-md); /* Adjusted padding */
+      }
+      .login-header h1 {
+        font-size: 22px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="login-header">
+    <div class="container">
+      <h1>Hindusthan College of Engineering and Technology</h1>
+      <p>Department of Computer Applications</p>
+    </div>
+  </header>
+
+  <div class="login-container-wrapper">
+    <main class="login-box">
+      <h2>Admin Login</h2>
+      <form method="POST" action="/adminlogin">
+        <div class="form-group">
+          <label for="uname">Username</label>
+          <input type="text" id="uname" name="uname" required placeholder="Enter your username" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password" />
+        </div>
+
+        <button type="submit" class="btn-submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+      </form>
+
+      <div class="back-to-selection">
+          <p>
+              <a href="/login_selection_page">Go back to login selection</a>
+          </p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      &copy; 2024 Hindusthan College Of Engineering And Technology. All rights reserved.
+    </div>
+  </footer>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <script>
+    var messages = {{ messages | safe }};
+    // For a more professional look, consider using a modal or a toast notification library
+    // instead of alert() for flash messages.
+    for (var i = 0; i < messages.length; i++) {
+      alert(messages[i]);
+    }
+  </script>
+  {% endif %}
+  {% endwith %}
+
+</body>
+</html>

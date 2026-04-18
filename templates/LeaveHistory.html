@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Leave Request History - Smart Attendance Tracker</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+
+    <style>
+        /* Global CSS Variables - Consistent across all your templates */
+        :root {
+            --primary-color: #00796B; /* Teal */
+            --secondary-color: #004D40; /* Darker Teal */
+            --accent-color: #ffc107; /* Amber/Yellow for highlights */
+            --text-dark: #2c3e50; /* Dark Slate Gray */
+            --text-medium: #555; /* Medium Gray */
+            --text-light: #cfd8dc; /* Light Grayish Blue */
+            --background-light: #f0f2f5; /* Light Gray Background */
+            --background-white: #ffffff;
+            --border-light: #e0e0e0; /* Slightly lighter border */
+            --danger-color: #e74c3c; /* Red for logout/delete */
+            --success-color: #28a745; /* Green for actions */
+            --info-color: #3498db; /* Blue for general info/links */
+
+            --font-poppins: 'Poppins', sans-serif;
+
+            --spacing-xxs: 4px;
+            --spacing-xs: 8px;
+            --spacing-sm: 12px;
+            --spacing-md: 20px;
+            --spacing-lg: 32px;
+            --spacing-xl: 48px;
+            --spacing-xxl: 96px;
+        }
+
+        body {
+    font-family: var(--font-poppins);
+    background-color: var(--background-light);
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+    /* --- CRITICAL FLEXBOX FOR FOOTER STICKING --- */
+    display: flex; /* MUST be present */
+    flex-direction: column; /* MUST be present */
+    min-height: 100vh; /* MUST be present */
+}
+
+        /* --- Site Header Styles (Consistent) --- */
+        .site-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-md) 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .site-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .site-header .logo h1 {
+            margin: 0;
+            font-size: 1.8em;
+            line-height: 1.2;
+        }
+
+        .site-header .logo h1 a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .site-header .logo p {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .site-header .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-right: var(--spacing-md);
+        }
+
+        .site-header .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .site-header .nav-links a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .site-header .logout-btn {
+            background-color: var(--danger-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .site-header .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* --- Main Content Container Styles (Consistent) --- */
+       .main-content-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: var(--background-white);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    /* --- CRITICAL FLEXBOX FOR FOOTER STICKING --- */
+    flex-grow: 1; /* MUST be present */
+}
+
+        .flash-messages {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .flash-messages li {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 500;
+            border: 1px solid transparent;
+        }
+        .flash-messages .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .flash-messages .danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .flash-messages .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+        .flash-messages .warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0; /* Changed from 30px to 0 for consistency with other templates */
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 10px;
+            text-align: center; /* Centered for consistent main headings */
+        }
+
+        /* --- Table Specific Styles --- */
+        .section-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--spacing-xl); /* Space between tables if multiple, or before footer */
+            background-color: var(--background-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .data-table thead {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .data-table th, .data-table td {
+            padding: var(--spacing-sm) var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Status badges for history page */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-pending { background-color: #ffc107; color: #856404; } /* Amber */
+        .status-approved { background-color: #28a745; color: white; } /* Green */
+        .status-rejected { background-color: #e74c3c; color: white; } /* Red */
+
+
+        /* --- Footer (Consistent with AdminHome.html) --- */
+     .site-footer {
+    background-color: #f1f1f1;
+    color: var(--text-dark);
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--border-light);
+    text-align: center;
+    font-size: 14px;
+    user-select: none;
+    margin-top: auto; /* MUST be present */
+}
+        .site-footer .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .site-header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            .site-header .nav-links { /* Added this for responsive nav if needed for other pages */
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-right: 0;
+            }
+            .site-header .logout-btn {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+                display: inline-flex;
+            }
+            .site-header .logo h1 {
+                font-size: 1.6em;
+            }
+            .main-content-container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            .data-table th, .data-table td {
+                padding: 8px 10px;
+                font-size: 0.9em;
+            }
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            /* Data-labels for table cells on small screens - specific to LeaveHistory */
+            td:nth-of-type(1):before { content: "Student Name:"; }
+            td:nth-of-type(2):before { content: "Reg No.:"; }
+            td:nth-of-type(3):before { content: "Year:"; }
+            td:nth-of-type(4):before { content: "Start Date:"; }
+            td:nth-of-type(5):before { content: "End Date:"; }
+            td:nth-of-type(6):before { content: "Reason:"; }
+            td:nth-of-type(7):before { content: "Status:"; }
+            td:nth-of-type(8):before { content: "Requested On:"; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header" id="main-header">
+        <div class="site-header-content">
+            <div class="logo">
+                <h1><a href="/">Hindusthan College of Engineering and Technology</a></h1>
+                <p>Department of Computer Applications</p>
+            </div>
+            <div class="nav-links">
+                <a href="{{ url_for('FacultyHome') }}"><i class="fas fa-home"></i> Home</a>
+                <a href="{{ url_for('FStudentInfo') }}"><i class="fas fa-user-graduate"></i> Student Info</a>
+                <a href="{{ url_for('FAttendanceInfo') }}"><i class="fas fa-calendar-check"></i> Attendance Info</a>
+                <a href="{{ url_for('NewStudent') }}"><i class="fas fa-user-plus"></i> New Student</a>
+                <a href="{{ url_for('faculty_leave_history') }}"><i class="fas fa-history"></i> Leave History</a>
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </header>
+
+    <div class="main-content-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        {# Adjusted main heading for the history page #}
+        <h2 class="section-title">Leave Request History</h2>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Register Number</th>
+                        <th>Year</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Requested On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leave in leave_requests %}
+                    <tr>
+                        <td>{{ leave[6] }}</td>
+                        <td>{{ leave[7] }}</td>
+                        <td>{{ leave[8] }}</td>
+                        <td>{{ leave[1] }}</td>
+                        <td>{{ leave[2] }}</td>
+                        <td>{{ leave[3] }}</td>
+                        <td>
+                            <span class="status-badge
+                                {% if leave[4] == 'Approved' %}status-approved
+                                {% elif leave[4] == 'Rejected' %}status-rejected
+                                {% else %}status-pending{% endif %}">
+                                {{ leave[4] }}
+                            </span>
+                        </td>
+                        <td>{{ leave[5] }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% if not leave_requests %}
+                    <tr><td colspan="8">No leave requests found in history.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <div class="footer-content">
+            &copy; 2025 Hindusthan College Of Engineering And Technology. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

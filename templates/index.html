@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Smart Attendance Tracker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="static/css/bootstrap.css" />
+  <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico"> <style>
+    /* Global CSS Variables (Custom Properties) for easier theme management */
+    :root {
+      --primary-color: #00796B; /* Teal */
+      --secondary-color: #004D40; /* Darker Teal */
+      --accent-color: #ffc107; /* Amber/Yellow for highlights */
+      --text-dark: #2c3e50; /* Dark Slate Gray */
+      --text-medium: #555; /* Medium Gray */
+      --text-light: #cfd8dc; /* Light Grayish Blue */
+      --background-light: #f8f9fa; /* Light Gray Background */
+      --background-white: #ffffff;
+      --border-light: #e0e0e0; /* Slightly lighter border */
+
+      --font-poppins: 'Poppins', sans-serif;
+
+      --spacing-xxs: 4px;
+      --spacing-xs: 8px;
+      --spacing-sm: 12px;
+      --spacing-md: 20px;
+      --spacing-lg: 32px;
+      --spacing-xl: 48px;
+      --spacing-xxl: 96px; /* Increased for major section padding */
+
+      /* Variable for header height - will be dynamically read by JS */
+      --header-height: 0px; /* Initial value, JS will set this */
+    }
+
+    /* --- Base Styles --- */
+    html {
+        /* scroll-behavior: smooth; */ /* We'll control smooth scroll with JS */
+    }
+
+    body {
+      font-family: var(--font-poppins);
+      margin: 0;
+      background-color: var(--background-light);
+      line-height: 1.7; /* Improved readability */
+      color: var(--text-dark);
+      -webkit-font-smoothing: antialiased; /* Smoother font rendering */
+      -moz-osx-font-smoothing: grayscale; /* Smoother font rendering */
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Remove the problematic :target styles */
+    /* :target {
+        padding-top: var(--header-height-mobile);
+        margin-top: calc(var(--header-height-mobile) * -1);
+        -webkit-clip-path: inset(var(--header-height-mobile) 0 0 0);
+        clip-path: inset(var(--header-height-mobile) 0 0 0);
+    } */
+
+
+    /* Container for consistent content width and centering */
+    .container {
+      max-width: 1280px; /* Slightly wider for more content */
+      margin: 0 auto;
+      padding: 0 var(--spacing-md); /* Default padding for all containers */
+    }
+
+    /* --- Header --- */
+    .site-header {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: var(--spacing-sm) 0; /* Reduced padding */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* More pronounced shadow */
+      position: sticky; /* Make header sticky */
+      top: 0; /* Stick to the top */
+      z-index: 1000; /* Ensure it stays above other content */
+    }
+
+    .site-header .container {
+      display: flex;
+      flex-direction: column; /* Mobile-first: Stack items */
+      justify-content: center; /* Center content horizontally when stacked */
+      align-items: center; /* Center content vertically when stacked */
+      gap: var(--spacing-sm);
+      text-align: center; /* Center text within logo on mobile */
+    }
+
+    .logo {
+        text-align: center; /* Ensure logo text is centered */
+    }
+
+    .logo h1 {
+      font-size: 24px; /* Reduced font size */
+      margin: 0;
+      font-weight: 700; /* Bolder for impact */
+      letter-spacing: -0.5px; /* Tighter letter spacing for main title */
+    }
+
+    .logo h1 a { /* Style for the link inside h1 */
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .logo p {
+      font-size: 13px; /* Reduced font size for tagline */
+      margin: var(--spacing-xxs) 0 0; /* Reduced margin */
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    .site-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column; /* Mobile-first: Stack nav items */
+      gap: var(--spacing-sm);
+      padding: 0;
+      margin: 0;
+      align-items: center; /* Center nav items horizontally */
+    }
+
+    .site-nav a {
+      color: white;
+      font-weight: 600; /* Slightly bolder for navigation */
+      text-transform: uppercase;
+      padding: var(--spacing-xs) var(--spacing-md); /* Add padding to nav links */
+      transition: all 0.3s ease; /* Smooth transition for hover effects */
+      border-radius: 6px; /* Slight round corners for nav links */
+      position: relative; /* For active state underline */
+    }
+
+    .site-nav a:hover {
+      color: var(--accent-color);
+      background-color: rgba(255, 255, 255, 0.15); /* Slightly more prominent background on hover */
+      transform: translateY(-2px); /* Subtle lift on hover */
+    }
+
+    /* Active navigation link indicator */
+    .site-nav a.active {
+        color: var(--accent-color);
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: inset 0 -3px 0 0 var(--accent-color); /* Bottom border for active state */
+    }
+
+    .site-nav a:active {
+        transform: translateY(0); /* "Press down" effect on click */
+        box-shadow: none; /* Remove active state shadow on press */
+    }
+
+    /* --- About Section --- */
+    .about-section {
+      display: flex;
+      flex-direction: column; /* Mobile-first: Stack elements */
+      padding: var(--spacing-xxl) var(--spacing-md); /* More vertical padding */
+      background-color: var(--background-white);
+      align-items: center; /* Center items when stacked */
+      justify-content: center;
+      gap: var(--spacing-lg); /* Space between image and text */
+      text-align: center; /* Default text alignment for mobile */
+    }
+
+    .about-img {
+      flex: 1;
+      max-width: 320px; /* Slightly larger image container */
+      text-align: center;
+    }
+
+    .about-img img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px; /* More rounded corners */
+      box-shadow: 0 15px 30px rgba(0,0,0,0.18); /* Stronger, softer shadow */
+      object-fit: cover;
+    }
+
+    .about-text {
+      flex: 2;
+      padding: var(--spacing-md); /* Keep internal padding on mobile */
+    }
+
+    .about-text h3 {
+      font-size: 38px; /* Larger heading for main section */
+      color: var(--text-dark);
+      margin-bottom: var(--spacing-sm);
+      font-weight: 800; /* Even bolder for main heading */
+      line-height: 1.2;
+    }
+
+    .about-text h4 {
+      font-size: 26px; /* Larger subheading */
+      color: var(--primary-color);
+      margin-bottom: var(--spacing-md);
+      font-weight: 600;
+    }
+
+    .about-text p {
+      font-size: 17px; /* Slightly adjusted text for readability */
+      color: var(--text-medium);
+      line-height: 1.8; /* Optimized line height for body */
+      margin-bottom: var(--spacing-lg);
+      max-width: 700px; /* Limit text width for better readability */
+      margin-left: auto; /* Center text block if max-width is applied */
+      margin-right: auto;
+    }
+
+    .attendance-buttons {
+      display: flex;
+      flex-direction: column; /* Stack buttons on mobile */
+      gap: var(--spacing-md); /* Space between stacked buttons */
+      align-items: center; /* Center buttons horizontally */
+    }
+
+    .attendance-buttons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 18px 40px; /* More generous padding for larger buttons */
+      border-radius: 12px; /* Slightly more rounded corners */
+      font-weight: 700; /* Bolder font for buttons */
+      font-size: 20px; /* Larger font for buttons */
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      width: 100%; /* Make buttons full width on mobile */
+      max-width: 320px; /* Limit max width for better appearance on larger mobiles */
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15); /* Stronger shadow */
+    }
+
+    .attendance-buttons a i {
+      margin-right: var(--spacing-sm);
+      font-size: 24px; /* Larger icon size */
+    }
+
+    .attendance-buttons a:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-4px); /* More noticeable lift on hover */
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25); /* Enhanced shadow on hover */
+    }
+
+    .attendance-buttons a:active {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    /* --- Footer --- */
+    .site-footer {
+      background-color: #f1f1f1;
+      color: var(--text-dark);
+      padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
+      border-top: 1px solid var(--border-light); /* Clear separation from content */
+    }
+
+    .footer-columns {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+    }
+
+    .footer-columns div {
+      flex: 1;
+      min-width: 220px; /* Slightly wider min-width for columns */
+      text-align: center; /* Center text within footer columns on mobile */
+    }
+
+    .footer-columns h4 {
+      font-size: 22px; /* Slightly larger footer headings */
+      margin-bottom: var(--spacing-md);
+      color: var(--primary-color);
+      font-weight: 700; /* Bolder */
+    }
+
+    .footer-columns p, .footer-columns ul li {
+      font-size: 15px; /* Slightly smaller footer text for density */
+      color: var(--text-medium);
+      line-height: 1.7;
+    }
+
+    .footer-columns ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-columns ul li a {
+      color: var(--text-medium);
+      display: block;
+      margin-bottom: var(--spacing-xs);
+      transition: color 0.3s ease;
+    }
+
+    .footer-columns ul li a:hover {
+      color: var(--primary-color);
+      text-decoration: underline; /* Add underline on hover for links */
+    }
+
+    .footer-bottom {
+      text-align: center;
+      font-size: 14px;
+      margin-top: var(--spacing-xl);
+      border-top: 1px solid var(--border-light);
+      padding-top: var(--spacing-md);
+      color: var(--text-medium);
+    }
+
+    /* --- Responsive Adjustments (Desktop First overrides for larger screens) --- */
+    @media (min-width: 768px) {
+      .site-header .container {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+
+      .site-header {
+        padding: var(--spacing-xs) 0; /* Reduced padding for desktop header */
+      }
+
+      .logo {
+        text-align: left;
+      }
+
+      .logo h1 {
+        font-size: 30px; /* Smaller on desktop than before, larger than mobile */
+      }
+
+      .logo p {
+        font-size: 14px; /* Consistent desktop tagline size */
+      }
+
+      .site-nav ul {
+        flex-direction: row;
+        gap: var(--spacing-lg); /* Slightly more space between nav items on desktop */
+      }
+
+      .about-section {
+        flex-direction: row;
+        text-align: left; /* Align text left on desktop */
+        gap: var(--spacing-xl); /* More space between image and text on desktop */
+      }
+
+      .about-img {
+        margin-right: var(--spacing-lg);
+        max-width: 450px; /* Larger image on desktop */
+      }
+
+      .about-text {
+        padding: 0;
+      }
+
+      .about-text h3 {
+        font-size: 48px; /* Even larger desktop heading */
+      }
+
+      .about-text h4 {
+        font-size: 32px; /* Larger desktop subheading */
+      }
+
+      .about-text p {
+        font-size: 18px; /* Standard body text size for desktop */
+        max-width: none; /* Remove max-width for desktop */
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .attendance-buttons {
+        flex-direction: row;
+        gap: var(--spacing-md);
+        justify-content: flex-start; /* Align buttons to the left */
+      }
+
+      .attendance-buttons a {
+        width: auto;
+        max-width: none;
+      }
+
+      .footer-columns {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: var(--spacing-lg);
+      }
+
+      .footer-columns div {
+        text-align: left;
+      }
+    }
+
+    /* Add some basic styling for the flash messages */
+    .flashes {
+        position: relative; /* Or absolute/fixed depending on desired behavior */
+        width: 100%;
+        max-width: 1280px; /* Match your container width */
+        margin: 15px auto; /* Center it with some top/bottom margin */
+        padding: 0 20px; /* Add padding to match container */
+        box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 15px;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+    }
+
+    .alert-warning {
+        color: #856404;
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header" id="main-header">
+  <div class="container">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='images/Hicet.jpg') }}" alt="HICET Logo" style="height: 60px; margin-right: 20px;">
+       <h1>Department of Computer Applications  </h1>
+    </div>
+      <nav class="site-nav">
+        <ul>
+          <li><a href="/" class="active">Home</a></li>
+          <li><a href="#about-section">About</a></li>
+          <li><a href="login_selection_page">Login</a></li>
+          </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flashes">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <section class="about-section" id="about-section">
+    <div class="about-img">
+      <img src="{{ url_for('static', filename='images/slide1.jpg') }}" alt="Hindusthan" style="height: 300px; width : 500px; margin-right: 15px;" />
+    </div>
+    <div class="about-text">
+      <h3>Welcome to the Department of Computer Applications</h3>
+      <h4>Empowering Future Technologists through Innovation</h4>
+      <p>
+        The Department of Computer Applications at Hindusthan College of Engineering and Technology is dedicated to fostering an environment of innovation and academic excellence. We equip our students with cutting-edge technological skills and real-world problem-solving abilities, preparing them to thrive as leaders in the dynamic software industry. Our experienced faculty and state-of-the-art laboratory facilities ensure a comprehensive and practical learning experience, shaping the next generation of developers and innovators.
+      </p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-columns">
+        <div>
+          <h4>About Us</h4>
+          <p>Hindusthan College provides excellent academic training and technological expertise, shaping future leaders.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="login_selection_page">Admin Login</a></li>
+            <li><a href="login_selection_page">Faculty Login</a></li>
+            <li><a href="login_selection_page">Student Login</a></li>
+             </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> Email: info@hindusthan.ac.in</p>
+          <p><i class="fas fa-phone"></i> Phone: +91 12345 67890</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2024 Hindusthan College Of Engineering And Technology. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <script>
+    var messages = {{ messages | safe }};
+    for (var i = 0; i < messages.length; i++) {
+      alert(messages[i]);
+    }
+  </script>
+  {% endif %}
+  {% endwith %}
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const siteHeader = document.getElementById('main-header'); // Get the header element
+      const navLinks = document.querySelectorAll('.site-nav a');
+
+     function smoothScrollTo(targetElement, offset) {
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: targetPosition - offset,
+          behavior: 'smooth'
+        });
+      }
+
+
+      const setActiveLink = (href) => {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === href) {
+            link.classList.add('active');
+          }
+        });
+      };
+
+      // Set active link on page load based on URL path
+      const currentPath = window.location.pathname;
+      if (currentPath === '/' || currentPath === '/index') {
+          setActiveLink('/');
+      } else if (currentPath === '/login_selection_page') {
+          setActiveLink('/login_selection_page');
+      }
+      // Add more conditions for other exact page paths as needed
+
+      // Handle smooth scrolling for anchor links
+      navLinks.forEach(link => {
+        if (link.getAttribute('href').startsWith('#')) {
+          link.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent default jump behavior
+
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+              const headerHeight = siteHeader.offsetHeight; // Get current header height
+              smoothScrollTo(targetElement, headerHeight + 10); // +10px for a little padding
+              setActiveLink(this.getAttribute('href')); // Set active class when clicked
+            }
+          });
+        }
+      });
+
+      // Optional: Add scroll-spy for active navigation (more advanced)
+      // This will highlight the nav link as you scroll down
+      window.addEventListener('scroll', () => {
+          const sections = document.querySelectorAll('section');
+          const headerHeight = siteHeader.offsetHeight; // Get current header height
+          let currentSectionId = '';
+
+          sections.forEach(section => {
+              const sectionTop = section.offsetTop;
+              const sectionHeight = section.clientHeight;
+
+              // Adjust the scroll position check by the header's height
+              if (window.pageYOffset >= sectionTop - headerHeight - 20 && // -20px buffer above section
+                  window.pageYOffset < sectionTop + sectionHeight - headerHeight - 20) {
+                  currentSectionId = section.getAttribute('id');
+              }
+          });
+
+          navLinks.forEach(link => {
+              // Ensure we don't deactivate actual page links like /login_selection_page
+              if (!link.getAttribute('href').startsWith('#') && link.getAttribute('href') !== currentPath) {
+                  return; // Skip non-anchor links if they are not the current page
+              }
+
+              if (currentSectionId && link.getAttribute('href').includes(currentSectionId)) {
+                  link.classList.add('active');
+              } else {
+                  link.classList.remove('active');
+              }
+
+              // Special handling for the home link if at the very top of the page
+              if (window.pageYOffset < (sections[0] ? sections[0].offsetTop - headerHeight : 100) && (link.getAttribute('href') === '/' || link.getAttribute('href') === '/index')) {
+                  link.classList.add('active');
+              }
+          });
+      });
+
+    });
+  </script>
+
+  </body>
+</html>
